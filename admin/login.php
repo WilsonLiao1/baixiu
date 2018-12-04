@@ -17,7 +17,7 @@ function login(){
   $email = $_POST['email'];
   $password = $_POST['password'];
 
-  $conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+  $conn = mysqli_connect(XIU_DB_HOST, XIU_DB_USER, XIU_DB_PASS, XIU_DB_NAME);
 
   if(!$conn){
     exit('<h1>连接数据库失败</h1>');
@@ -60,6 +60,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   <meta charset="utf-8">
   <title>Sign in &laquo; Admin</title>
   <link rel="stylesheet" href="/static/assets/vendors/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="/static/assets/vendors/animate/animate.css">
   <link rel="stylesheet" href="/static/assets/css/admin.css">
 </head>
 <body>
@@ -83,5 +84,30 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
       <button class="btn btn-primary btn-block">登 录</button>
     </form>
   </div>
+
+  <script src="/static/assets/vendors/jquery/jquery.js"></script>
+  <script>
+    $(function($){
+
+      
+       var emailFormat = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/ 
+       
+       $('#email').on('blur', function(){
+        
+         var value = $(this).val()
+         if(!value || !emailFormat.test(value)) return
+        
+         $.get('/admin/api/avatar.php', { email: value }, function (res) {
+            if (!res) return
+            $('.avatar').fadeOut(function () {
+              $(this).on('load', function () {
+                $(this).fadeIn()
+              }).attr('src', res);
+            })
+          })
+
+       })
+    })
+  </script>
 </body>
 </html>
