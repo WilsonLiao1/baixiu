@@ -121,7 +121,7 @@ $categories = xiu_fetch_all('select * from categories;');
         <div class="col-md-8">
           <div class="page-action">
             <!-- show when multiple checked -->
-            <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量删除</a>
+            <a id="btn_delete" class="btn btn-danger btn-sm" href="/admin/category-delete.php" style="display: none">批量删除</a>
           </div>
           <table class="table table-striped table-bordered table-hover">
             <thead>
@@ -171,7 +171,7 @@ $categories = xiu_fetch_all('select * from categories;');
         } else {
           allCheckeds.splice(allCheckeds.indexOf(id), 1)
         }
-        allChecked.length ? $btnDelete.fadeIn() : $btnDelete.fadeOut()
+        allCheckeds.length ? $btnDelete.fadeIn() : $btnDelete.fadeOut()
         $btnDelete.prop('search', '?id=' + allcheckeds)
       })
     })
