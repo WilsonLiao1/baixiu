@@ -33,7 +33,7 @@ require_once 'config.php';
     if (!$conn) {
       exit('连接失败');
     }
-  
+    mysqli_set_charset($conn, 'utf8');
     $query = mysqli_query($conn, $sql);
     if (!$query) {
       return false;
@@ -67,6 +67,7 @@ function xiu_execute ($sql) {
       exit('连接失败');
     }
   
+    mysqli_set_charset($conn, 'utf8');
     $query = mysqli_query($conn, $sql);
     if (!$query) {
       return false;
