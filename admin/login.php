@@ -52,6 +52,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   login();
 }
 
+if($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action']) && $_GET['action'] === 'logout') {
+  unset($_SESSION['current_login_user']);
+}
+
 ?>
 
 <!DOCTYPE html>

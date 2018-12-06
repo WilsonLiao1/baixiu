@@ -3,7 +3,7 @@
 <div class="aside">
   <div class="profile">
     <img class="avatar" src="/static/uploads/avatar.jpg">
-    <h3 class="name">布头儿</h3>
+    <h3 class="name">Wilson</h3>
   </div>
   <ul class="nav">
     <li <?php echo $current_page === 'index' ? ' class="active"' : '' ?>>

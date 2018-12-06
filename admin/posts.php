@@ -1,3 +1,124 @@
+<?php 
+  
+  require_once '../functions.php';
+
+  xiu_get_current_user();
+
+
+  //处理分页参数
+
+  $page = empty($_GET['page']) ? 1 : (int)$_GET['page'];
+  $size = 20;
+
+  //跳转
+
+  if($page < 1){
+    header('Location: /admin/posts.php?page=1');
+  }   
+
+  $offset = ($page - 1) * $size;  
+
+
+
+
+
+//--------------------------------------------------------------------------------
+
+
+  //获取全部数据
+  //数据库联合查询
+  $posts = xiu_fetch_all("select 
+	posts.id,
+  posts.title,
+	users.nickname as user_name,
+	categories.name as category_name,
+	posts.created,
+	posts.status
+from posts
+inner join categories on posts.category_id = categories.id
+inner join users on posts.user_id = users.id
+order by posts.created desc
+limit {$offset}, {$size};");
+
+
+//-----------------------------------------------------------------------------------
+
+//求出最大页码
+$total_count = (int)xiu_fetch_one('select count(1) as num from posts 
+inner join categories on posts.category_id = categories.id
+inner join users on posts.user_id = users.id;')['num'];
+
+$total_pages = (int)ceil($total_count / $size);
+
+
+  //跳转
+
+if($page > $total_pages){
+  header('Location: /admin/posts.php?page=' . $total_pages);
+}
+
+
+//页码的计算
+$visiables = 5;
+$region = ($visiables - 1) / 2; // 左右区间
+$begin = $page - $region; 
+$end = $begin +  $visiables;//结束页码+1
+//$begin 必须大于零 ，
+
+if ($begin < 1){
+  $begin = 1; // 确保最小为1
+  $end = $begin + $visiables;
+}
+
+// $end 必须小于最大页数
+
+if ($end > $total_pages + 1){
+  // end 超出范围
+
+  $end = $total_pages + 1;
+
+  $begin = $end - $visiables;
+  if($begin < 1){
+    $begin = 1;
+  }
+}
+
+
+
+
+
+//--------------------------------------------------------------------------
+//数据的格式转换
+
+  /**
+   * 转换状态显示
+   *  
+   * @param string $status 英文状态
+   * @return string  中文状态
+   * 
+   */
+  // 数据格式转换  
+  function convert_status($status){
+    $dict = array(
+      'published' => '已发布',
+      'drafted' => '草稿',
+      'trashed' => '回收站'
+    );
+    return isset($dict['$status']) ? $dict['$status'] : '未知' ;
+  }
+
+
+  function convert_date ($created){
+    $timestamp = strtotime($created);
+    return date('Y年m月d日<b\r>H:i:s', $timestamp);
+
+  }
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -26,10 +147,9 @@
       <div class="page-action">
         <!-- show when multiple checked -->
         <a class="btn btn-danger btn-sm" href="javascript:;" style="display: none">批量删除</a>
-        <form class="form-inline">
+        <form class="form-inline" action="<?php echo $_SERVER['PHP_SELF']; ?>">
           <select name="" class="form-control input-sm">
-            <option value="">所有分类</option>
-            <option value="">未分类</option>
+            <option value="all">所有分类</option>
           </select>
           <select name="" class="form-control input-sm">
             <option value="">所有状态</option>
@@ -40,9 +160,9 @@
         </form>
         <ul class="pagination pagination-sm pull-right">
           <li><a href="#">上一页</a></li>
-          <li><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
+          <?php for($i = $begin; $i < $end; $i++): ?>
+          <li<?php echo $i === $page ? ' class="active"' : '';?>><a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+          <?php endfor ?>
           <li><a href="#">下一页</a></li>
         </ul>
       </div>
@@ -59,42 +179,20 @@
           </tr>
         </thead>
         <tbody>
+          <?php foreach ($posts as $item): ?>
           <tr>
             <td class="text-center"><input type="checkbox"></td>
-            <td>随便一个名称</td>
-            <td>小小</td>
-            <td>潮科技</td>
-            <td class="text-center">2016/10/07</td>
-            <td class="text-center">已发布</td>
+            <td><?php echo $item['title']; ?></td>
+            <td><?php echo $item['user_name']; ?></td>
+            <td><?php echo $item['category_name']; ?></td>
+            <td class="text-center"><?php echo convert_date($item['created']); ?></td>
+            <td class="text-center"><?php echo convert_status($item['status']); ?></td>
             <td class="text-center">
               <a href="javascript:;" class="btn btn-default btn-xs">编辑</a>
               <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
             </td>
           </tr>
-          <tr>
-            <td class="text-center"><input type="checkbox"></td>
-            <td>随便一个名称</td>
-            <td>小小</td>
-            <td>潮科技</td>
-            <td class="text-center">2016/10/07</td>
-            <td class="text-center">已发布</td>
-            <td class="text-center">
-              <a href="javascript:;" class="btn btn-default btn-xs">编辑</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
-          <tr>
-            <td class="text-center"><input type="checkbox"></td>
-            <td>随便一个名称</td>
-            <td>小小</td>
-            <td>潮科技</td>
-            <td class="text-center">2016/10/07</td>
-            <td class="text-center">已发布</td>
-            <td class="text-center">
-              <a href="javascript:;" class="btn btn-default btn-xs">编辑</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
-            </td>
-          </tr>
+          <?php endforeach ?>
         </tbody>
       </table>
     </div>

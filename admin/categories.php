@@ -4,6 +4,7 @@ require_once '../functions.php';
 
 xiu_get_current_user();
 
+//添加数据的函数
 function add_category () {
   if (empty($_POST['name']) || empty($_POST['slug'])) {
     $GLOBALS['message'] = '请完整填写表单';
@@ -11,7 +12,7 @@ function add_category () {
     return;
   }
 
-
+  //接受并保存数据
   $name = $_POST['name'];
   $slug = $_POST['slug'];
 
@@ -21,11 +22,13 @@ function add_category () {
   $GLOBALS['message'] = $rows <= 0 ? '添加失败！' : '添加成功！';
 }
 
+//编辑数据的函数
 function edit_category () {
   global $current_edit_category;
 
   $id = $current_edit_category['id'];
   $name = empty($_POST['name']) ? $current_edit_category['name'] : $_POST['name'];
+  // 同步数据
   $current_edit_category['name'] = $name;
   $slug = empty($_POST['slug']) ? $current_edit_category['slug'] : $_POST['slug'];
   $current_edit_category['slug'] = $slug;
@@ -37,11 +40,17 @@ function edit_category () {
 
 }
 
+//判断是添加还是编辑
+
 if (empty($_GET['id'])) {
+  //添加
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
     add_category();
   }
 } else {
+  //编辑
+  //客户端通过URL 传递一个ID
+  //客户端是要来拿一个修改数据的表单
   $current_edit_category = xiu_fetch_one('select * from categories where id = ' . $_GET['id']);
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     edit_category();
@@ -157,22 +166,30 @@ $categories = xiu_fetch_all('select * from categories;');
   <script src="/static/assets/vendors/jquery/jquery.js"></script>
   <script src="/static/assets/vendors/bootstrap/js/bootstrap.js"></script>
   <script>
+    //选中显示批量删除
     $(function ($) {
       var $tbodyCheckboxs = $('tbody input')
       var $btnDelete = $('#btn_delete')
-
+      
+      //定义数组记录当表格中任意一个checkbox选中状态变化
       var allCheckeds = []
 
       $tbodyCheckboxs.on('change',function () {
         var id = $(this).data('id');
 
         if ($(this).prop('checked')) {
-          allCheckeds.push(id)
+          allCheckeds.includes(id) || allCheckeds.push(id)
         } else {
           allCheckeds.splice(allCheckeds.indexOf(id), 1)
         }
         allCheckeds.length ? $btnDelete.fadeIn() : $btnDelete.fadeOut()
         $btnDelete.prop('search', '?id=' + allcheckeds)
+      })
+
+      //全选和全不选
+      $('thead input').on('change', function(){
+        var checked = $(this).prop('checked')
+        $tbodyCheckboxs.prop('checked', checked).trigger('change')
       })
     })
   </script>
