@@ -40,7 +40,7 @@
             <div class="form-group">
               <label for="slug">别名</label>
               <input id="slug" class="form-control" name="slug" type="text" placeholder="slug">
-              <p class="help-block">https://zce.me/author/<strong>slug</strong></p>
+              <p class="help-block">https://wilson.me/author/<strong>slug</strong></p>
             </div>
             <div class="form-group">
               <label for="nickname">昵称</label>
@@ -76,9 +76,9 @@
               <tr>
                 <td class="text-center"><input type="checkbox"></td>
                 <td class="text-center"><img class="avatar" src="/static/assets/img/default.png"></td>
-                <td>i@zce.me</td>
-                <td>zce</td>
-                <td>汪磊</td>
+                <td>i@wilson.me</td>
+                <td>wilson</td>
+                <td>wilson</td>
                 <td>激活</td>
                 <td class="text-center">
                   <a href="post-add.php" class="btn btn-default btn-xs">编辑</a>
@@ -88,9 +88,9 @@
               <tr>
                 <td class="text-center"><input type="checkbox"></td>
                 <td class="text-center"><img class="avatar" src="/static/assets/img/default.png"></td>
-                <td>i@zce.me</td>
-                <td>zce</td>
-                <td>汪磊</td>
+                <td>i@wilson.me</td>
+                <td>wilson</td>
+                <td>wilson</td>
                 <td>激活</td>
                 <td class="text-center">
                   <a href="post-add.php" class="btn btn-default btn-xs">编辑</a>
@@ -100,9 +100,9 @@
               <tr>
                 <td class="text-center"><input type="checkbox"></td>
                 <td class="text-center"><img class="avatar" src="/static/assets/img/default.png"></td>
-                <td>i@zce.me</td>
-                <td>zce</td>
-                <td>汪磊</td>
+                <td>i@wilson.me</td>
+                <td>wilson</td>
+                <td>wilson</td>
                 <td>激活</td>
                 <td class="text-center">
                   <a href="post-add.php" class="btn btn-default btn-xs">编辑</a>

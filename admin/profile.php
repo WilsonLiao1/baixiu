@@ -43,21 +43,21 @@
         <div class="form-group">
           <label for="email" class="col-sm-3 control-label">邮箱</label>
           <div class="col-sm-6">
-            <input id="email" class="form-control" name="email" type="type" value="w@zce.me" placeholder="邮箱" readonly>
+            <input id="email" class="form-control" name="email" type="type" value="w@wilson.me" placeholder="邮箱" readonly>
             <p class="help-block">登录邮箱不允许修改</p>
           </div>
         </div>
         <div class="form-group">
           <label for="slug" class="col-sm-3 control-label">别名</label>
           <div class="col-sm-6">
-            <input id="slug" class="form-control" name="slug" type="type" value="zce" placeholder="slug">
-            <p class="help-block">https://zce.me/author/<strong>zce</strong></p>
+            <input id="slug" class="form-control" name="slug" type="type" value="wilson" placeholder="slug">
+            <p class="help-block">https://wilson.me/author/<strong>wilson</strong></p>
           </div>
         </div>
         <div class="form-group">
           <label for="nickname" class="col-sm-3 control-label">昵称</label>
           <div class="col-sm-6">
-            <input id="nickname" class="form-control" name="nickname" type="type" value="汪磊" placeholder="昵称">
+            <input id="nickname" class="form-control" name="nickname" type="type" value="wilson" placeholder="昵称">
             <p class="help-block">限制在 2-16 个字符</p>
           </div>
         </div>
