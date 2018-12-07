@@ -164,7 +164,6 @@ $categories = xiu_query('select * from categories');
         var file = $(this).prop('files')[0]
         // 为这个文件对象创建一个 Object URL
         var url = URL.createObjectURL(file)
-        // 不用奇怪 BLOB: binary large object block
         // 将图片元素显示到界面上（预览）
         $(this).siblings('.thumbnail').attr('src', url).fadeIn()
       })

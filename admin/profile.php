@@ -81,6 +81,31 @@
 
   <script src="/static/assets/vendors/jquery/jquery.js"></script>
   <script src="/static/assets/vendors/bootstrap/js/bootstrap.js"></script>
+
+  <script>
+    $('#avatar').on('change', function(){
+      //判断是否选中了文件
+
+      var $this = $(this)
+      var files = $this.prop('files')
+      if (!files.length) return 
+
+      var file = files[0]
+
+      var data = new FormData()
+
+      data.append('avatar', file)
+
+      var xhr = new XMLHttpRequest()
+      xhr.open('POST','/admin/api/upload.php')
+
+      xhr.onload = function(){
+        $this.siblings('img').arr('src', this.responseText)
+      }
+      
+      console.log(1)
+    })
+  </script>
   <script>NProgress.done()</script>
 </body>
 </html>
